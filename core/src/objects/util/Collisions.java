@@ -25,4 +25,11 @@ public class Collisions {
 				+ Math.pow(Math.abs(moved.getY()-destination.getLon()), 2))
 				< moved.getSize());
 	}
+	
+	public static boolean check(GameObject moved, Point point, int pointsSize) {
+		
+		return (Math.sqrt(Math.pow(Math.abs(moved.getX()-point.getLat()), 2) 
+				+ Math.pow(Math.abs(moved.getY()-point.getLon()), 2))
+				< moved.getSize()+pointsSize);
+	}
 }

@@ -43,4 +43,6 @@ public class Melee implements Attacking {
 		}
 		return null;
 	}
+	
+	public void releaseMap() {}
 }

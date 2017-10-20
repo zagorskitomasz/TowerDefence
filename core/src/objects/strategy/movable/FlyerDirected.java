@@ -1,5 +1,7 @@
 package objects.strategy.movable;
 
+import java.util.List;
+
 import com.badlogic.gdx.Input;
 
 import map.MapGraph;
@@ -19,7 +21,7 @@ public class FlyerDirected implements Movable {
 	}
 	
 	@Override
-	public Direction move(GameObject moved, Input input, MapGraph map) {
+	public Direction move(GameObject moved, Input input, MapGraph map, List<GameObject> listOfEverything) {
 		 
 		moved.setPosition(moved.getX()+direction.getXDir(), moved.getY()+direction.getYDir());
 		

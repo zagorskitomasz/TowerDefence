@@ -42,12 +42,14 @@ public class Vertex {
 		return roads; 
 	}
 	
-	public void addRoad(Vertex destination) {
+	public Edge addRoad(Vertex destination) {
 		
 		Edge newRoad = new Edge(this, destination);
 		
 		roads.add(newRoad);
 		destination.getRoads().add(newRoad);
+		
+		return newRoad;
 	}
 	
 	public void resetDist(){
@@ -60,5 +62,16 @@ public class Vertex {
 	
 	public void setDistToStart(double d){
 		distToStart = d;
+	}
+	
+	public Edge getRoad(Vertex to) {
+		
+		for(Edge road : roads) {
+			
+			if(road.getDestination(this)==to)
+				return road;
+		}
+		
+		return null;
 	}
 }

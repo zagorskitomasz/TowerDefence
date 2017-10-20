@@ -1,5 +1,7 @@
 package objects.strategy.movable;
 
+import java.util.List;
+
 import com.badlogic.gdx.Input;
 
 import map.MapGraph;
@@ -12,7 +14,7 @@ import objects.util.Direction;
 public class Interactive implements Movable {
 
 	@Override
-	public Direction move(GameObject moved, Input input, MapGraph map) {
+	public Direction move(GameObject moved, Input input, MapGraph map, List<GameObject> listOfEverything) {
 		
 		moved.setPosition(input.getX(), input.getY());
 		

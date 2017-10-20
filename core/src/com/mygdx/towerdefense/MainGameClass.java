@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -98,9 +99,9 @@ public class MainGameClass extends ApplicationAdapter {
 	
 	private void initializeTimeIntervals() {
 		
-		tankAddingInterval = 2000;
-		shooterAddingInterval = 3500;
-		movingInterval = 50;
+		tankAddingInterval = 3000;
+		shooterAddingInterval = 4500;
+		movingInterval = 80;
 		
 		lastTankAdded = TimeUtils.millis();
 		lastShooterAdded = TimeUtils.millis();
@@ -117,7 +118,7 @@ public class MainGameClass extends ApplicationAdapter {
 		map = new MapGraph();
 		map = createMap(map, enemySpawnPoint, enemyDestPoint);
 		
-		Factory.createUnit("sampleTank", 0, enemySpawnPoint, enemyDestPoint);
+		Factory.createUnit("sampleTank", 0, enemySpawnPoint, enemyDestPoint, map);
 		Factory.appendCandidates(listOfEverything);
 	}
 	
@@ -126,19 +127,25 @@ public class MainGameClass extends ApplicationAdapter {
 	    if(lastTankAdded < TimeUtils.millis()-tankAddingInterval) {
 	    	
 	    	lastTankAdded = TimeUtils.millis();
-	    	Factory.createUnit("sampleTank", 0, enemySpawnPoint, enemyDestPoint);
+	    	Factory.createUnit("sampleTank", 0, enemySpawnPoint, enemyDestPoint, map);
 	    }
 	    
 	    if(lastShooterAdded < TimeUtils.millis()-shooterAddingInterval) {
 	    	
 	    	lastShooterAdded = TimeUtils.millis();
-	    	Factory.createUnit("sampleShooter", 0, enemySpawnPoint, enemyDestPoint);
+	    	Factory.createUnit("sampleShooter", 0, enemySpawnPoint, enemyDestPoint, map);
 	    }
 	    
-	    if(Gdx.input.justTouched()) {
+	    if(Gdx.input.justTouched() && Gdx.input.isButtonPressed(Buttons.LEFT)) {
 	    	Vector3 pointerPosition = getMousePosInGameWorld();
 	    	Point myPosition = new Point(pointerPosition.x, 480-(pointerPosition.y));
-			Factory.createTower("sampleTower", 1, myPosition);
+			Factory.createTower("sampleTower", 1, myPosition, map);
+	    }
+	    
+	    if(Gdx.input.justTouched() && Gdx.input.isButtonPressed(Buttons.RIGHT)) {
+	    	Vector3 pointerPosition = getMousePosInGameWorld();
+	    	Point myPosition = new Point(pointerPosition.x, 480-(pointerPosition.y));
+			Factory.createTower("sampleBarricade", 1, myPosition, map);
 	    }
 	}
 
@@ -146,7 +153,7 @@ public class MainGameClass extends ApplicationAdapter {
 		
 		if(lastMove < TimeUtils.millis()-movingInterval) {
 	    	
-	    	listOfEverything.forEach(object -> object.moveIt(null, map));
+	    	listOfEverything.forEach(object -> object.moveIt(null, map, listOfEverything));
 	    	lastMove = TimeUtils.millis();
 	    }
 	    

@@ -115,9 +115,9 @@ public class GameObject {
 		shower.show(new Point(x, y), renderer);
 	}
 	
-	public void moveIt(Input input, MapGraph map) {
+	public void moveIt(Input input, MapGraph map, List<GameObject> listOfEverything) {
 		
-		direction = mover.move(this, input, map);
+		direction = mover.move(this, input, map, listOfEverything);
 	}
 	
 	public void damageIt(List<GameObject> listOfEverything, int dmgValue) {
@@ -142,6 +142,8 @@ public class GameObject {
 	// W ten sposób zrobimy wybuchające pociski - przy kolizji pocisk jest niszczony przy użyciu obiektu Explosive
 	public void destroy() {
 		
+		attacker.releaseMap();
+		penetrable.unBlockRoad();
 		toKill = destroyer.killYourself(this);
 	}
 	
@@ -151,6 +153,14 @@ public class GameObject {
 	
 	public boolean canBuildOn() {
 		return penetrable.canIBuildHere();
+	}
+	
+	public boolean isBarricade() {
+		return penetrable.isBarricaded();
+	}
+	
+	public void blockRoad(MapGraph map, Point one, Point two) {
+		penetrable.blockRoad(map, one, two);
 	}
 	
 	public boolean isToKill() {

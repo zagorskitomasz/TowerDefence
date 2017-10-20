@@ -13,5 +13,6 @@ public class Passive implements Attacking {
 
 	@Override
 	public void attack(GameObject attacker, List<GameObject> listOfEverything, Input input) {}
-
+	
+	public void releaseMap() {}
 }

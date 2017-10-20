@@ -15,10 +15,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 public class MapGraph {
 
 	private HashMap<Point, Vertex> graph;
+	private List<Edge> allRoads;
 	
 	public MapGraph() {
 		
-		graph = new HashMap<>();
+		this.graph = new HashMap<>();
+		this.allRoads = new LinkedList<>();
 	}
 	
 	public Set<Point> getPoints(){
@@ -47,7 +49,12 @@ public class MapGraph {
 		if(!graph.containsKey(firstEnd) || !graph.containsKey(secondEnd))
 			throw new IllegalArgumentException("No such points in graph");
 		
-		graph.get(firstEnd).addRoad(graph.get(secondEnd));
+		allRoads.add(graph.get(firstEnd).addRoad(graph.get(secondEnd)));
+	}
+	
+	public List<Edge> getAllRoads(){
+		
+		return allRoads;
 	}
 	
 	public List<Point> findRoute(Point start, Point goal){
@@ -147,5 +154,11 @@ public class MapGraph {
 		}
 		
 		renderer.end();
+	}
+	
+	public Edge getRoad(Point from, Point to) {
+		
+		Edge road = this.graph.get(from).getRoad(this.graph.get(to));
+		return road;
 	}
 }

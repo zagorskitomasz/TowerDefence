@@ -1,5 +1,7 @@
 package objects.strategy.penetrability;
 
+import map.MapGraph;
+import map.Point;
 import objects.api.Penetrability;
 
 public class Blockade implements Penetrability {
@@ -15,5 +17,13 @@ public class Blockade implements Penetrability {
 		
 		return false;
 	}
-
+	
+	public boolean isBarricaded() {
+		
+		return false;
+	}
+	
+	public void blockRoad(MapGraph map, Point one, Point two) {}
+	
+	public void unBlockRoad() {}
 }

@@ -2,9 +2,11 @@ package objects.util;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 
+import map.MapGraph;
 import map.Point;
 import objects.api.GameObject;
 import objects.strategy.attackable.Immortal;
@@ -17,6 +19,7 @@ import objects.strategy.destroyable.JustDisappear;
 import objects.strategy.movable.FlyerDirected;
 import objects.strategy.movable.Standing;
 import objects.strategy.movable.WalkerAI;
+import objects.strategy.penetrability.Barricade;
 import objects.strategy.penetrability.Blockade;
 import objects.strategy.penetrability.WalkingSpot;
 import objects.strategy.showable.JustImage;
@@ -55,13 +58,15 @@ public class Factory {
 		Factory.listOfCandidates.add(newMissile);
 	}
 	
-	public static void createUnit(String unitType, int faction, Point spawnPoint, Point destPoint) {
+	public static void createUnit(String unitType, int faction, Point spawnPoint, Point destPoint, MapGraph map) {
+		
+		Random gen = new Random();
 		
 		if(unitType.equals("sampleTank")) {
 			
-			GameObject newUnit = new GameObject(spawnPoint.getLat(), spawnPoint.getLon(), faction, 7, 
+			GameObject newUnit = new GameObject(spawnPoint.getLat()+(gen.nextInt(31)-15), spawnPoint.getLon()+(gen.nextInt(31)-15), faction, 7, 
 					new JustImage(Color.ORANGE, 5), 
-					new WalkerAI(1, destPoint), 
+					new WalkerAI(2, destPoint), 
 					new Vulnerable(20), 
 					new Peacefull(), 
 					new Passive(), 
@@ -73,12 +78,12 @@ public class Factory {
 
 		else if(unitType.equals("sampleShooter")) {
 			
-			GameObject newUnit = new GameObject(spawnPoint.getLat(), spawnPoint.getLon(), faction, 6, 
+			GameObject newUnit = new GameObject(spawnPoint.getLat()+(gen.nextInt(31)-15), spawnPoint.getLon()+(gen.nextInt(31)-15), faction, 6, 
 					new JustImage(Color.PURPLE, 4), 
-					new WalkerAI(2, destPoint), 
+					new WalkerAI(3, destPoint), 
 					new Vulnerable(12), 
 					new Peacefull(), 
-					new Shooter(5, 80, 600, "sampleMissile"), 
+					new Shooter(5, 80, 600, "sampleMissile", map, spawnPoint, faction), 
 					new JustDisappear(), 
 					new Blockade());
 			
@@ -86,7 +91,7 @@ public class Factory {
 		}
 	}
 	
-	public static void createTower(String towerType, int faction, Point spawnPoint) {
+	public static void createTower(String towerType, int faction, Point spawnPoint, MapGraph map) {
 	
 		if(towerType.equals("sampleTower")) {
 			
@@ -95,11 +100,25 @@ public class Factory {
 					new Standing(), 
 					new Vulnerable(60), 
 					new Peacefull(), 
-					new Shooter(8, 150, 600, "sampleMissile"), 
+					new Shooter(8, 150, 600, "sampleMissile", map, spawnPoint, faction), 
 					new JustDisappear(), 
 					new Blockade());
 			
 			Factory.listOfCandidates.add(newTower);
+		}
+		
+		if(towerType.equals("sampleBarricade")) {
+			
+			GameObject newBarricade = new GameObject(spawnPoint.getLat(), spawnPoint.getLon(), faction, 20, 
+					new JustImage(Color.BLUE, 18), 
+					new Standing(), 
+					new Vulnerable(100), 
+					new Peacefull(), 
+					new Passive(),
+					new JustDisappear(), 
+					new Barricade());
+			
+			Factory.listOfCandidates.add(newBarricade);
 		}
 	}
 }
