@@ -1,5 +1,7 @@
 # TowerDefence
 
+# Project suspended
+
 Done:
 - working prototype
 - strategy+factory patterns - one interface for all ingame objects
