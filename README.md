@@ -1,6 +1,6 @@
-# TowerDefence
+# Game engine / A* graph algorithm / Libgdx / legacy code / abandoned
 
-# Project suspended/legacy
+# TowerDefence
 
 Done:
 - working prototype
