@@ -1,6 +1,6 @@
 # TowerDefence
 
-# Project suspended
+# Project suspended/legacy
 
 Done:
 - working prototype
